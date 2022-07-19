@@ -2,10 +2,10 @@
 
 one:
   description: MyString
-  categories: one
   user: one
+  category: one
 
 two:
   description: MyString
-  categories: two
   user: two
+  category: two

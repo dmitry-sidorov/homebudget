@@ -2,8 +2,6 @@
 
 one:
   title: MyString
-  payments: one
 
 two:
   title: MyString
-  payments: two
