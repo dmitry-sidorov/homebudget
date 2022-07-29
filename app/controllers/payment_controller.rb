@@ -1,27 +1,47 @@
 class PaymentController < ApplicationController
 
 def index
-  payments = Payment.all.as_json(include: :category)
+  payments = Payment.all
 
-  render json: payments
-end
-
-def new
-  @payment = Payment.new
+  render_serialized(payments)
 end
 
 def create
-  @payment = Payment.new(allowed_payment_params)
+  @payment = Payment.create(allowed_payment_params)
 end
 
 def show
-  payment_id = params[:id]
-  render json: Payment.find(payment_id)
+  id = params[:id]
+  payment = Payment.find(id)
+
+  render_serialized(payment)
+end
+
+def destroy
+  id = params[:id]
+
+  Payment.destroy(id)
+end
+
+def generate_payment
+  new_payment = Payment.new(description: "food", user_id: 1, category_id: 1, processing_date: DateTime.now, price: 42.0)
+  message = "Error while generating payment"
+
+  if new_payment.save
+    render json: new_payment
+  else
+    render json: message
+  end
 end
 
 private
 def allowed_payment_params
   params.require(:payment).permit(:user_id, :category_id)
+end
+
+def render_serialized(data)
+  serialized = data.as_json(include: :category)
+  render json: serialized
 end
 
 

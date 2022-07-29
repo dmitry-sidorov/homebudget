@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  payment_list = "payment#index"
-
   # Defines the root path route ("/")
-  root payment_list
+  root "payment#index"
 
-  resources :payment
+  resources :payment, :except => [:new, :edit]
+  resources :user, :except => [:new, :edit]
+  resources :category, :except => [:new, :edit]
 
-
-  # get :payments, to: payment_list
-  get :users, to: "user#index"
-  get :categories, to: "category#index"
+  get "generate_payment", to: "payment#generate_payment"
 end
