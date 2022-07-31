@@ -40,7 +40,7 @@ def allowed_payment_params
 end
 
 def render_serialized(data)
-  serialized = data.as_json(include: :category)
+  serialized = data.as_json(include: :category, except: [:category_id, :user_id, :created_at, :updated_at])
   render json: serialized
 end
 
